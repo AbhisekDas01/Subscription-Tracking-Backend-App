@@ -63,7 +63,7 @@ const subscriptionSchema = new mongoose.Schema({
         index : true,
     }
 
-} , {timeseries: true});
+} , {timestamps: true});
 
 //auto caclute the renewal date if missing
 subscriptionSchema.pre('save' , function(next){
