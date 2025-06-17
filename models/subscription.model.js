@@ -16,8 +16,8 @@ const subscriptionSchema = new mongoose.Schema({
     },
     currency : {
         type : String,
-        enum : ['USD' , 'IND' , 'EUR'],
-        default : 'IND'
+        enum : ['USD' , 'INR' , 'EUR'],
+        default : 'INR'
     },
     frequency: {
         type : String,
@@ -49,7 +49,7 @@ const subscriptionSchema = new mongoose.Schema({
     },
     renewalDate: {
         type : Date,
-        required : true,
+        required : false,
         validate : {
             validator : function(value){return value > this.startDate},
 
@@ -88,14 +88,17 @@ subscriptionSchema.pre('save' , function(next){
         this.renewalDate.setDate(this.renewalDate.getDate() + renewalPeriods[this.frequency]);
 
 
-        //update the status
+         //update the status
         if(this.renewalDate < new Date() ){
-            this.status = 'expried';
+            this.status = 'expired';
         }
 
         next();
 
     }
+
+
+   
 })
 
 
